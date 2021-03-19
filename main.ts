@@ -85,8 +85,6 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     game.showLongText("Ouch you broke your back", DialogLayout.Bottom)
     music.playTone(262, music.beat(BeatFraction.Half))
     info.changeLifeBy(-1)
-    pause(5000)
-    info.changeLifeBy(-1)
 })
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     animation.runImageAnimation(
@@ -165,7 +163,70 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     )
 })
 info.onCountdownEnd(function () {
-	
+    pause(500)
+    animation.runImageAnimation(
+    mySprite,
+    [img`
+        . . . . . . . f f . . . . . . . 
+        . . 4 4 e . f e f f f f f . . . 
+        . . 4 d 4 f e e e f e f f f . . 
+        . . f f f e e 4 f f 2 e f f f . 
+        f f 4 2 2 e d 1 b f f 2 e f f . 
+        f f 4 2 2 4 d f f e f 2 e 2 f f 
+        . f 5 2 2 4 d d 4 e f 2 e 2 2 f 
+        . f 5 2 2 4 d d 4 e f 2 e 2 2 f 
+        f f 4 2 2 4 d f f e f 2 e 2 f f 
+        f f 4 2 2 e d 1 b f f 2 e f f . 
+        . . f f f e e 4 f f 2 e f f f . 
+        . . 4 d 4 f e e e f e e f f . . 
+        . . 4 4 e . f e f f f f f . . . 
+        . . . . . . . f f . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `,img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . f f . . . . . . . 
+        . . 4 4 e . f e f f f f f . . . 
+        . . 4 d 4 f e e e f e f f f . . 
+        . . f f f e e 4 f f 2 e f f f . 
+        f f 4 2 2 e d 1 b f f 2 e f f . 
+        f f 4 2 2 4 d f f e f 2 e 2 f f 
+        . f 5 2 2 4 d d 4 e f 2 e 2 2 f 
+        . f 5 2 2 4 d d 4 e f 2 e 2 2 f 
+        f f 4 2 2 4 d f f e f 2 e 2 f f 
+        f f 4 2 2 e d 1 b f f 2 e f f . 
+        . . f f f e e 4 f f 2 e f f f . 
+        . . 4 d 4 f e e e f e e f f . . 
+        . . 4 4 e . f e f f f f f . . . 
+        . . . . . . . f f . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `,img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . f f . . . . . . . 
+        . . 4 4 e . f e f f f f f . . . 
+        . . 4 d 4 f e e e f e f f f . . 
+        . . f f f e e 4 f f 2 e f f f . 
+        f f 4 2 2 e d 1 b f f 2 e f f . 
+        f f 4 2 2 4 d f f e f 2 e 2 f f 
+        . f 5 2 2 4 d d 4 e f 2 e 2 2 f 
+        . f 5 2 2 4 d d 4 e f 2 e 2 2 f 
+        f f 4 2 2 4 d f f e f 2 e 2 f f 
+        f f 4 2 2 e d 1 b f f 2 e f f . 
+        . . f f f e e 4 f f 2 e f f f . 
+        . . 4 d 4 f e e e f e e f f . . 
+        . . 4 4 e . f e f f f f f . . . 
+        . . . . . . . f f . . . . . . . 
+        `],
+    500,
+    false
+    )
+    music.playTone(262, music.beat(BeatFraction.Half))
+    game.showLongText("Some Times poeple cannot make it to the end someimes they have to start over this time you got the bad ending and that is", DialogLayout.Bottom)
+    music.playTone(262, music.beat(BeatFraction.Half))
+    game.showLongText("You Died!", DialogLayout.Top)
+    music.playTone(262, music.beat(BeatFraction.Half))
+    game.over(false, effects.dissolve)
 })
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     animation.runImageAnimation(
@@ -321,7 +382,12 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
 })
 info.onLifeZero(function () {
     ded = 1
-    pause(10000)
+    info.startCountdown(10)
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
+    info.changeScoreBy(1)
+    music.powerDown.play()
+    otherSprite.destroy(effects.fire, 500)
 })
 let ded = 0
 let moola: Sprite = null
@@ -400,5 +466,6 @@ for (let value of tiles.getTilesByType(assets.tile`myTile`)) {
     tiles.setTileAt(value, sprites.dungeon.floorDark0)
     tiles.placeOnTile(moola, value)
 }
+info.setLife(5)
 ded = 0
 info.startCountdown(600)
