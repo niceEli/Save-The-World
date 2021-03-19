@@ -1,3 +1,28 @@
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile0`, function (sprite, location) {
+    if (info.score() >= 7) {
+        tiles.setTilemap(tilemap`level1`)
+        game.showLongText("You Saved the world", DialogLayout.Full)
+        game.showLongText("Explore or press B on bus", DialogLayout.Bottom)
+        info.stopCountdown()
+        for (let value of tiles.getTilesByType(assets.tile`myTile`)) {
+            moola = sprites.create(img`
+                . . b b b b . . 
+                . b 5 5 5 5 b . 
+                b 5 d 3 3 d 5 b 
+                b 5 3 5 5 1 5 b 
+                c 5 3 5 5 1 d c 
+                c d d 1 1 d d c 
+                . f d d d d f . 
+                . . f f f f . . 
+                `, SpriteKind.Food)
+            tiles.setTileAt(value, sprites.dungeon.floorDark0)
+            tiles.placeOnTile(moola, value)
+        }
+        if (controller.B.isPressed()) {
+            game.over(true, effects.confetti)
+        }
+    }
+})
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     animation.runImageAnimation(
     mySprite,
@@ -163,7 +188,11 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     )
 })
 info.onCountdownEnd(function () {
-    pause(500)
+    music.playTone(262, music.beat(BeatFraction.Half))
+    game.showLongText("Some Times poeple cannot make it to the end someimes they have to start over this time you got the bad ending and that is", DialogLayout.Bottom)
+    music.playTone(262, music.beat(BeatFraction.Half))
+    game.showLongText("You Died!", DialogLayout.Top)
+    music.playTone(262, music.beat(BeatFraction.Half))
     animation.runImageAnimation(
     mySprite,
     [img`
@@ -218,14 +247,9 @@ info.onCountdownEnd(function () {
         . . 4 4 e . f e f f f f f . . . 
         . . . . . . . f f . . . . . . . 
         `],
-    500,
-    false
+    5000,
+    true
     )
-    music.playTone(262, music.beat(BeatFraction.Half))
-    game.showLongText("Some Times poeple cannot make it to the end someimes they have to start over this time you got the bad ending and that is", DialogLayout.Bottom)
-    music.playTone(262, music.beat(BeatFraction.Half))
-    game.showLongText("You Died!", DialogLayout.Top)
-    music.playTone(262, music.beat(BeatFraction.Half))
     game.over(false, effects.dissolve)
 })
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -385,8 +409,11 @@ info.onLifeZero(function () {
     info.startCountdown(10)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
+    music.playTone(262, music.beat(BeatFraction.Half))
+    game.showLongText("You Got a Coin!", DialogLayout.Bottom)
+    music.playTone(262, music.beat(BeatFraction.Half))
     info.changeScoreBy(1)
-    music.powerDown.play()
+    music.powerUp.play()
     otherSprite.destroy(effects.fire, 500)
 })
 let ded = 0
@@ -419,7 +446,7 @@ game.setDialogFrame(img`
     1bbb11bb11bb11bb11bb11b1
     11bbbbbbbbbbbbbbbbbbbb11
     `)
-tiles.setTilemap(tilemap`level1`)
+tiles.setTilemap(tilemap`level3`)
 game.splash("Save The World", "By Eli")
 mySprite = sprites.create(img`
     . . . . . . f f f f . . . . . . 
@@ -469,3 +496,16 @@ for (let value of tiles.getTilesByType(assets.tile`myTile`)) {
 info.setLife(5)
 ded = 0
 info.startCountdown(600)
+forever(function () {
+    if (controller.up.isPressed()) {
+    	
+    } else if (controller.down.isPressed()) {
+    	
+    } else if (controller.left.isPressed()) {
+    	
+    } else if (controller.right.isPressed()) {
+    	
+    } else {
+        animation.stopAnimation(animation.AnimationTypes.All, mySprite)
+    }
+})
