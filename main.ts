@@ -2,26 +2,14 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile0`, function (sprite, l
     if (info.score() >= 7) {
         tiles.setTilemap(tilemap`level1`)
         game.showLongText("You Saved the world", DialogLayout.Full)
-        game.showLongText("Explore or press B on bus", DialogLayout.Bottom)
         info.stopCountdown()
-        for (let value of tiles.getTilesByType(assets.tile`myTile`)) {
-            moola = sprites.create(img`
-                . . b b b b . . 
-                . b 5 5 5 5 b . 
-                b 5 d 3 3 d 5 b 
-                b 5 3 5 5 1 5 b 
-                c 5 3 5 5 1 d c 
-                c d d 1 1 d d c 
-                . f d d d d f . 
-                . . f f f f . . 
-                `, SpriteKind.Food)
-            tiles.setTileAt(value, sprites.dungeon.floorDark0)
-            tiles.placeOnTile(moola, value)
-        }
-        if (controller.B.isPressed()) {
-            game.over(true, effects.confetti)
-        }
+        game.over(true, effects.confetti)
     }
+})
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile1`, function (sprite, location) {
+    controller.moveSprite(mySprite, 200, 200)
+    mySprite.ay = 0
+    _2d = 0
 })
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     animation.runImageAnimation(
@@ -100,16 +88,28 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     )
 })
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-    music.jumpUp.playUntilDone()
-    music.jumpDown.playUntilDone()
-    music.playTone(262, music.beat(BeatFraction.Half))
-    game.showLongText("You jumped", DialogLayout.Bottom)
-    music.playTone(262, music.beat(BeatFraction.Half))
-    game.showLongText("...", DialogLayout.Bottom)
-    music.playTone(262, music.beat(BeatFraction.Half))
-    game.showLongText("Ouch you broke your back", DialogLayout.Bottom)
-    music.playTone(262, music.beat(BeatFraction.Half))
-    info.changeLifeBy(-1)
+    if (_2d == 0) {
+        music.jumpUp.playUntilDone()
+        music.jumpDown.playUntilDone()
+        music.playTone(262, music.beat(BeatFraction.Half))
+        game.showLongText("You jumped", DialogLayout.Bottom)
+        music.playTone(262, music.beat(BeatFraction.Half))
+        game.showLongText("...", DialogLayout.Bottom)
+        music.playTone(262, music.beat(BeatFraction.Half))
+        game.showLongText("Ouch you broke your back", DialogLayout.Bottom)
+        music.playTone(262, music.beat(BeatFraction.Half))
+        info.changeLifeBy(-1)
+    } else {
+        if (mySprite.isHittingTile(CollisionDirection.Bottom)) {
+            mySprite.vy = -300
+        } else if (mySprite.isHittingTile(CollisionDirection.Left)) {
+            mySprite.vy = -300
+        } else if (mySprite.isHittingTile(CollisionDirection.Right)) {
+            mySprite.vy = -300
+        } else {
+        	
+        }
+    }
 })
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     animation.runImageAnimation(
@@ -404,6 +404,11 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     true
     )
 })
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile2`, function (sprite, location) {
+    controller.moveSprite(mySprite, 200, 0)
+    mySprite.ay = 500
+    _2d = 1
+})
 info.onLifeZero(function () {
     ded = 1
     info.startCountdown(10)
@@ -416,6 +421,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSpr
     music.powerUp.play()
     otherSprite.destroy(effects.fire, 500)
 })
+let _2d = 0
 let ded = 0
 let moola: Sprite = null
 let mySprite: Sprite = null
@@ -446,7 +452,7 @@ game.setDialogFrame(img`
     1bbb11bb11bb11bb11bb11b1
     11bbbbbbbbbbbbbbbbbbbb11
     `)
-tiles.setTilemap(tilemap`level3`)
+tiles.setTilemap(tilemap`level1`)
 game.splash("Save The World", "By Eli")
 mySprite = sprites.create(img`
     . . . . . . f f f f . . . . . . 
@@ -466,7 +472,7 @@ mySprite = sprites.create(img`
     . . . . . f f f f f f . . . . . 
     . . . . . f f . . f f . . . . . 
     `, SpriteKind.Player)
-controller.moveSprite(mySprite)
+controller.moveSprite(mySprite, 200, 200)
 tiles.placeOnTile(mySprite, tiles.getTileLocation(18, 18))
 scene.cameraFollowSprite(mySprite)
 scene.cameraShake(5, 1000)
