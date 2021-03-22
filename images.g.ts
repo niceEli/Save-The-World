@@ -57,56 +57,6 @@ c d d 1 1 d d c
 . f d d d d f . 
 . . f f f f . . 
 `;
-            case "image2":return img`
-. . b b b b . . 
-. b 5 5 5 5 b . 
-b 5 d 3 3 d 5 b 
-b 5 3 5 5 1 5 b 
-c 5 3 5 5 1 d c 
-c d d 1 1 d d c 
-. f d d d d f . 
-. . f f f f . . 
-`;
-            case "image4":return img`
-. . b b b b . . 
-. b 5 5 5 5 b . 
-b 5 d 3 3 d 5 b 
-b 5 3 5 5 1 5 b 
-c 5 3 5 5 1 d c 
-c d d 1 1 d d c 
-. f d d d d f . 
-. . f f f f . . 
-`;
-            case "image5":return img`
-. . b b b b . . 
-. b 5 5 5 5 b . 
-b 5 d 3 3 d 5 b 
-b 5 3 5 5 1 5 b 
-c 5 3 5 5 1 d c 
-c d d 1 1 d d c 
-. f d d d d f . 
-. . f f f f . . 
-`;
-            case "image7":return img`
-. . b b b b . . 
-. b 5 5 5 5 b . 
-b 5 d 3 3 d 5 b 
-b 5 3 5 5 1 5 b 
-c 5 3 5 5 1 d c 
-c d d 1 1 d d c 
-. f d d d d f . 
-. . f f f f . . 
-`;
-            case "image8":return img`
-. . b b b b . . 
-. b 5 5 5 5 b . 
-b 5 d 3 3 d 5 b 
-b 5 3 5 5 1 5 b 
-c 5 3 5 5 1 d c 
-c d d 1 1 d d c 
-. f d d d d f . 
-. . f f f f . . 
-`;
         }
         return null;
     })

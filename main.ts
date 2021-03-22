@@ -104,14 +104,21 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
         music.playTone(262, music.beat(BeatFraction.Half))
     } else {
         if (mySprite.isHittingTile(CollisionDirection.Bottom)) {
+            mySprite.ay = 500
             mySprite.vy = -300
             music.jumpUp.play()
         } else if (mySprite.isHittingTile(CollisionDirection.Left)) {
-            mySprite.vy = -300
+            mySprite.ay = 500
+            mySprite.vy = -250
+            mySprite.ax = -5
             music.jumpUp.play()
+            mySprite.ax = 0
         } else if (mySprite.isHittingTile(CollisionDirection.Right)) {
-            mySprite.vy = -300
+            mySprite.ay = 500
+            mySprite.vy = -250
+            mySprite.ax = 5
             music.jumpUp.play()
+            mySprite.ax = 0
         } else {
         	
         }
@@ -507,7 +514,6 @@ game.showLongText("Roz And Mocca: Uh Oh", DialogLayout.Center)
 music.playTone(262, music.beat(BeatFraction.Half))
 info.setLife(5)
 ded = 0
-info.startCountdown(6000)
 forever(function () {
     if (controller.up.isPressed()) {
     	
@@ -519,5 +525,16 @@ forever(function () {
     	
     } else {
         animation.stopAnimation(animation.AnimationTypes.All, mySprite)
+    }
+})
+forever(function () {
+    if (_2d == 1) {
+        if (mySprite.isHittingTile(CollisionDirection.Left)) {
+            mySprite.ay = 100
+        } else if (mySprite.isHittingTile(CollisionDirection.Right)) {
+            mySprite.ay = 100
+        } else {
+            mySprite.ay = 500
+        }
     }
 })
