@@ -1,9 +1,13 @@
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile0`, function (sprite, location) {
-    if (info.score() >= 7) {
-        tiles.setTilemap(tilemap`level1`)
-        game.showLongText("You Saved the world", DialogLayout.Full)
-        info.stopCountdown()
-        game.over(true, effects.confetti)
+    if (controller.A.isPressed()) {
+        if (info.score() >= 7) {
+            tiles.setTilemap(tilemap`level1`)
+            game.showLongText("You Saved the world", DialogLayout.Full)
+            info.stopCountdown()
+            game.over(true, effects.confetti)
+        }
+    } else {
+        mySprite.say("I should press A (Z)", 500)
     }
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile1`, function (sprite, location) {
@@ -96,16 +100,18 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
         music.playTone(262, music.beat(BeatFraction.Half))
         game.showLongText("...", DialogLayout.Bottom)
         music.playTone(262, music.beat(BeatFraction.Half))
-        game.showLongText("Ouch you broke your back", DialogLayout.Bottom)
+        game.showLongText("It did nothing (try going in a 2d section)", DialogLayout.Bottom)
         music.playTone(262, music.beat(BeatFraction.Half))
-        info.changeLifeBy(-1)
     } else {
         if (mySprite.isHittingTile(CollisionDirection.Bottom)) {
             mySprite.vy = -300
+            music.jumpUp.play()
         } else if (mySprite.isHittingTile(CollisionDirection.Left)) {
             mySprite.vy = -300
+            music.jumpUp.play()
         } else if (mySprite.isHittingTile(CollisionDirection.Right)) {
             mySprite.vy = -300
+            music.jumpUp.play()
         } else {
         	
         }
@@ -423,8 +429,8 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSpr
 })
 let _2d = 0
 let ded = 0
-let moola: Sprite = null
 let mySprite: Sprite = null
+let moola: Sprite = null
 game.setDialogTextColor(7)
 game.setDialogFrame(img`
     11bbbbbbbbbbbbbbbbbbbb11
@@ -453,6 +459,20 @@ game.setDialogFrame(img`
     11bbbbbbbbbbbbbbbbbbbb11
     `)
 tiles.setTilemap(tilemap`level1`)
+for (let value of tiles.getTilesByType(assets.tile`myTile`)) {
+    moola = sprites.create(img`
+        . . b b b b . . 
+        . b 5 5 5 5 b . 
+        b 5 d 3 3 d 5 b 
+        b 5 3 5 5 1 5 b 
+        c 5 3 5 5 1 d c 
+        c d d 1 1 d d c 
+        . f d d d d f . 
+        . . f f f f . . 
+        `, SpriteKind.Food)
+    tiles.setTileAt(value, sprites.dungeon.floorDark0)
+    tiles.placeOnTile(moola, value)
+}
 game.splash("Save The World", "By Eli")
 mySprite = sprites.create(img`
     . . . . . . f f f f . . . . . . 
@@ -485,23 +505,9 @@ game.showLongText("Mocca: Ya", DialogLayout.Left)
 music.playTone(262, music.beat(BeatFraction.Half))
 game.showLongText("Roz And Mocca: Uh Oh", DialogLayout.Center)
 music.playTone(262, music.beat(BeatFraction.Half))
-for (let value of tiles.getTilesByType(assets.tile`myTile`)) {
-    moola = sprites.create(img`
-        . . b b b b . . 
-        . b 5 5 5 5 b . 
-        b 5 d 3 3 d 5 b 
-        b 5 3 5 5 1 5 b 
-        c 5 3 5 5 1 d c 
-        c d d 1 1 d d c 
-        . f d d d d f . 
-        . . f f f f . . 
-        `, SpriteKind.Food)
-    tiles.setTileAt(value, sprites.dungeon.floorDark0)
-    tiles.placeOnTile(moola, value)
-}
 info.setLife(5)
 ded = 0
-info.startCountdown(600)
+info.startCountdown(6000)
 forever(function () {
     if (controller.up.isPressed()) {
     	
