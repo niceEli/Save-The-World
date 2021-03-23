@@ -169,6 +169,10 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
         }
     }
 })
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile4`, function (sprite, location) {
+    info.changeLifeBy(-1)
+    tiles.placeOnRandomTile(mySprite, assets.tile`myTile3`)
+})
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     animation.runImageAnimation(
     mySprite,
