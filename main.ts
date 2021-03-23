@@ -1,6 +1,6 @@
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile0`, function (sprite, location) {
     if (controller.A.isPressed()) {
-        if (info.score() >= 7) {
+        if (info.score() <= 5) {
             tiles.setTilemap(tilemap`level1`)
             game.showLongText("You Saved the world", DialogLayout.Full)
             info.stopCountdown()
