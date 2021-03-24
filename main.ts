@@ -38,6 +38,9 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile1`, function (sprite, l
     mySprite.ay = 0
     _2d = 0
 })
+controller.player4.onEvent(ControllerEvent.Connected, function () {
+    game.showLongText("This Is A Non Multiplayer Game Players 2 3 4 Cannot Play", DialogLayout.Bottom)
+})
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     if (_2d == 0) {
         animation.runImageAnimation(
@@ -273,6 +276,9 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile3`, function (sprite, l
     100,
     false
     )
+})
+controller.player3.onEvent(ControllerEvent.Connected, function () {
+    game.showLongText("This Is A Non Multiplayer Game Players 2 3 4 Cannot Play", DialogLayout.Bottom)
 })
 info.onCountdownEnd(function () {
     music.playTone(262, music.beat(BeatFraction.Half))
