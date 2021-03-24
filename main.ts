@@ -510,6 +510,9 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSpr
     music.powerUp.play()
     otherSprite.destroy(effects.fire, 500)
 })
+controller.player2.onEvent(ControllerEvent.Connected, function () {
+    game.showLongText("This Is A Non Multiplayer Game Players 2 3 4 Cannot Play", DialogLayout.Bottom)
+})
 let _2d = 0
 let ded = 0
 let mySprite: Sprite = null
