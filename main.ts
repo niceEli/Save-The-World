@@ -174,7 +174,18 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile4`, function (sprite, location) {
     info.changeLifeBy(-1)
+    music.playTone(262, music.beat(BeatFraction.Half))
+    game.showLongText("You Got Hit", DialogLayout.Bottom)
+    music.playTone(262, music.beat(BeatFraction.Half))
+    game.showLongText("Respawning", DialogLayout.Bottom)
+    music.playTone(262, music.beat(BeatFraction.Half))
+    pause(500)
     tiles.placeOnRandomTile(mySprite, assets.tile`myTile3`)
+    music.powerDown.play()
+    pause(500)
+    music.playTone(262, music.beat(BeatFraction.Half))
+    game.showLongText("Respawn Succesfull", DialogLayout.Bottom)
+    music.playTone(262, music.beat(BeatFraction.Half))
 })
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     animation.runImageAnimation(
