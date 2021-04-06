@@ -40,6 +40,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile1`, function (sprite, l
 })
 controller.player4.onEvent(ControllerEvent.Connected, function () {
     game.showLongText("This Is A Non Multiplayer Game Players 2 3 4 Cannot Play", DialogLayout.Bottom)
+    console.log("Console Warn: No Multiplayer")
 })
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     if (_2d == 0) {
@@ -122,18 +123,21 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
             mySprite.ay = 500
             mySprite.vy = -300
             music.jumpUp.play()
+            console.log("Jump Bottom")
         } else if (mySprite.isHittingTile(CollisionDirection.Left)) {
             mySprite.ay = 500
             mySprite.vy = -250
             mySprite.ax = -5
             music.jumpUp.play()
             mySprite.ax = 0
+            console.log("Jump Left")
         } else if (mySprite.isHittingTile(CollisionDirection.Right)) {
             mySprite.ay = 500
             mySprite.vy = -250
             mySprite.ax = 5
             music.jumpUp.play()
             mySprite.ax = 0
+            console.log("Jump Right")
         } else {
         	
         }
@@ -155,18 +159,21 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
             mySprite.ay = 500
             mySprite.vy = -300
             music.jumpUp.play()
+            console.log("Jump Bottom")
         } else if (mySprite.isHittingTile(CollisionDirection.Left)) {
             mySprite.ay = 500
             mySprite.vy = -250
             mySprite.ax = -5
             music.jumpUp.play()
             mySprite.ax = 0
+            console.log("Jump Left")
         } else if (mySprite.isHittingTile(CollisionDirection.Right)) {
             mySprite.ay = 500
             mySprite.vy = -250
             mySprite.ax = 5
             music.jumpUp.play()
             mySprite.ax = 0
+            console.log("Jump Right")
         } else {
         	
         }
@@ -290,12 +297,20 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile3`, function (sprite, l
 })
 controller.player3.onEvent(ControllerEvent.Connected, function () {
     game.showLongText("This Is A Non Multiplayer Game Players 2 3 4 Cannot Play", DialogLayout.Bottom)
+    console.log("Console Warn: No Multiplayer")
 })
 info.onCountdownEnd(function () {
+    music.playTone(554, music.beat(BeatFraction.Half))
+    game.showLongText("Spirt: You Deserve This", DialogLayout.Bottom)
+    music.playTone(554, music.beat(BeatFraction.Half))
+    music.playTone(554, music.beat(BeatFraction.Half))
+    game.showLongText("Spirt: HAHA", DialogLayout.Bottom)
+    music.playTone(554, music.beat(BeatFraction.Half))
     music.playTone(262, music.beat(BeatFraction.Half))
     game.showLongText("Some Times poeple cannot make it to the end someimes they have to start over this time you got the bad ending and that is", DialogLayout.Bottom)
     music.playTone(262, music.beat(BeatFraction.Half))
-    game.showLongText("You Died!", DialogLayout.Top)
+    music.rest(music.beat(BeatFraction.Double))
+    game.showLongText("You Died!", DialogLayout.Bottom)
     music.playTone(262, music.beat(BeatFraction.Half))
     animation.runImageAnimation(
     mySprite,
@@ -354,6 +369,13 @@ info.onCountdownEnd(function () {
     5000,
     true
     )
+    music.playTone(554, music.beat(BeatFraction.Half))
+    game.showLongText("Spirt: Bruh U Ded Why You Ruin The World", DialogLayout.Bottom)
+    music.playTone(554, music.beat(BeatFraction.Half))
+    music.rest(music.beat(BeatFraction.Double))
+    music.playMelody("B C5 B C5 B A - - ", 120)
+    music.playMelody("F G A G A G - - ", 120)
+    music.playMelody("C - D - C - - - ", 120)
     game.over(false, effects.dissolve)
 })
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -508,6 +530,9 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
         100,
         true
         )
+    } else {
+        mySprite.vy = 10000
+        music.jumpDown.play()
     }
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile2`, function (sprite, location) {
@@ -529,11 +554,13 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSpr
 })
 controller.player2.onEvent(ControllerEvent.Connected, function () {
     game.showLongText("This Is A Non Multiplayer Game Players 2 3 4 Cannot Play", DialogLayout.Bottom)
+    console.log("Console Warn: No Multiplayer")
 })
 let _2d = 0
 let ded = 0
 let mySprite: Sprite = null
 let moola: Sprite = null
+console.log("Start Game")
 game.setDialogTextColor(7)
 game.setDialogFrame(img`
     11bbbbbbbbbbbbbbbbbbbb11
@@ -602,6 +629,7 @@ ded = 0
 _2d = 1
 mySprite.ay = 500
 tiles.placeOnRandomTile(mySprite, assets.tile`myTile3`)
+console.log("Done Startup")
 game.splash("Save The World", "By Eli")
 animation.runImageAnimation(
 mySprite,
@@ -694,6 +722,7 @@ game.showLongText("Mocca: Ya", DialogLayout.Left)
 music.playTone(262, music.beat(BeatFraction.Half))
 game.showLongText("Roz And Mocca: Uh Oh", DialogLayout.Center)
 music.playTone(262, music.beat(BeatFraction.Half))
+info.startCountdown(1)
 forever(function () {
     if (controller.up.isPressed()) {
     	
@@ -705,16 +734,28 @@ forever(function () {
     	
     } else {
         animation.stopAnimation(animation.AnimationTypes.All, mySprite)
+        console.log("Animation Stop")
     }
 })
 forever(function () {
     if (_2d == 1) {
         if (mySprite.isHittingTile(CollisionDirection.Left)) {
             mySprite.ay = 100
+            console.log("On Left Wall (2D)")
         } else if (mySprite.isHittingTile(CollisionDirection.Right)) {
             mySprite.ay = 100
+            console.log("On Right Wall (2D)")
         } else {
             mySprite.ay = 500
         }
     }
+})
+forever(function () {
+    console.logValue("x", mySprite.x)
+    console.logValue("y", mySprite.y)
+    console.logValue("2d", _2d)
+})
+forever(function () {
+    console.logValue("Frames", randint(30, 60))
+    pause(1000)
 })
